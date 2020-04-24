@@ -1,0 +1,1 @@
+ https://haczelakinga.github.io/javascript-blog/
