@@ -28,8 +28,12 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
-  optArticleAuthorSelector = '.post-author';
+  optArticleAuthorSelector = '.post-author',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-';
 
+
+//Generate title links
 function generateTitleLinks(customSelector = ''){
 
   const titleList = document.querySelector(optTitleListSelector);
@@ -56,11 +60,37 @@ function generateTitleLinks(customSelector = ''){
 
 generateTitleLinks();
 
+//Calculate params
+let params = {
+  min: 9999,
+  max: 0,
+};
+
+function calculateTagsParams(allTags) {
+  for(let tag in allTags) {
+    params.max = allTags[tag] > params.max ? allTags[tag] : params.max;
+    params.min = allTags[tag] < params.min ? allTags[tag] : params.min;
+  }
+  return params;
+}
+
+//Calculate font-size
+function calculateTagClass(count, params){
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+  return optCloudClassPrefix + classNumber;
+}
+//Generate tags
 function generateTags(){
+  
+  /* [NEW] create a new variable allTags with an empty object */
+  let allTags = {};
+
   const articles = document.querySelectorAll(optArticleSelector);
 
   for( let article of articles) {
-
     const tagWrapper = article.querySelector(optArticleTagsSelector);
     let html = '';
     const articleTags = article.getAttribute('data-tags');
@@ -69,10 +99,32 @@ function generateTags(){
     for(let tag of articleTagsArray) {
       const linkHtml = `<li><a href=#tag-${tag}>${tag}</a></li>`;
       html += linkHtml;
+
+      /* [NEW] check if this link is NOT already in allTags */
+      if(!allTags.hasOwnProperty(tag)){
+        /* [NEW] add generated code to allTags array */
+        allTags[tag] = 1;
+      } else {
+        allTags[tag]++;
+      }
     }
 
     tagWrapper.innerHTML = html;
+    console.log(allTags);
   }
+
+  /* [NEW] find list of tags in right column */
+  const tagList = document.querySelector('.tags');
+
+  const tagsParams = calculateTagsParams(allTags);
+  console.log(tagsParams);
+
+  let allTagsHtml = '';
+
+  for(let tag in allTags) {
+    allTagsHtml += `<li class="${calculateTagClass(allTags[tag], tagsParams)}"><a href=#tag-${tag}>${tag} </a></li>`;
+  }  
+  tagList.innerHTML = allTagsHtml;
 }
 generateTags();
 
@@ -100,7 +152,6 @@ function tagClickHandler(event, element){
   generateTitleLinks(`[data-tags~="${tag}"]`);
 }
 
-
 function addClickListenersToTags(){
 
   const tagLinks = document.querySelectorAll('a[href^="#tag-"]');
@@ -110,7 +161,6 @@ function addClickListenersToTags(){
       let element = this;
       tagClickHandler(event, element);
     });
-
   }
 }
 

@@ -29,7 +29,7 @@ a {
 }
 
 .container {
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -57,7 +57,9 @@ a {
 /* Layout */
 .wrapper {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+
 }
 
 .sidebar {
@@ -65,11 +67,15 @@ a {
   border-radius: 3px;
   padding: 20px 60px;
   align-self: center;
+  margin-left: 10px;
+  flex: 0 0 20%;
+  justify-self: center;
 }
 
 .posts {
   background: $color-light;
   max-width: 800px;
+  flex: 0 0 70%;
 }
 
 /* Logo */
@@ -143,13 +149,39 @@ a {
   }
 }
 
+.tag-size{
+  &-1 {
+    font-size: 100%;
+    display: inline;
+  }
+
+  &-2 {
+    font-size: 120%;
+    color: green;
+    display: inline;
+  }
+  &-3 {
+    font-size: 140%;
+    display: inline;
+  }
+  &-4 {
+    font-size: 150%;
+    display: inline;
+  }
+  &-5 {
+    font-size: 160%;
+    display: inline;
+  }
+}
+
 //Image
 .article-img-wrapper {
-  width: auto;
+  max-width: 800px;
   margin-bottom: 40px;
 }
 
 .article-img {
   max-height: 600px;
+  width: 100%;
   object-fit: cover;
 }
