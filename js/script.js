@@ -96,7 +96,7 @@ function generateTags(){
     const articleTagsArray = articleTags.split(' ');
 
     for(let tag of articleTagsArray) {
-      const linkHtml = `<li><a href=#tag-${tag}>${tag}</a></li>`;
+      const linkHtml = `<li><a href=#tag-${tag}>${tag}</a></li> `;
       html += linkHtml;
 
       /* [NEW] check if this link is NOT already in allTags */
