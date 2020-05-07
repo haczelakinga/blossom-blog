@@ -282,19 +282,15 @@
     <a href="#author-{{ articleAuthor }}">{{ articleAuthor }}</a>
   </script>
 
-  <script id="template-author-list" type="text/x-handlebars-template">
-  
-  </script>
-
   <script id="template-tag-link-cloud" type="text/x-handlebars-template">
       {{#each tags}}
-      <li class="{{ className }}"><a href="#tag-{{ tag }}">{{ tag }} </a></li>
+      <li class="{{ className }}"><a href="#tag-{{ tag }}">{{ tag }}</a></li>
       {{/each}}
   </script>
 
   <script id="template-author-list" type="text/x-handlebars-template">
     {{#each authors}}
-    <li><a href="#author-{{ name }">{{ name }}({{ count }})</a></li>
+    <li><a href="#author-{{ name }}">{{ name }}({{ count }})</a></li>
     {{/each}}
   </script>
   

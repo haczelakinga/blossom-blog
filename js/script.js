@@ -133,8 +133,11 @@ function generateTags(){
       count: allTags[tag],
       className: calculateTagClass(allTags[tag], tagsParams)
     });
+
   }  
+  console.log(allTags);
   tagList.innerHTML = templates.tagCloudLink(allTagsData);
+
 }
 generateTags();
 
@@ -205,9 +208,7 @@ function generateAuthors(){
       count: allAuthors[author]
     });
   } 
-
-  console.log(allAuthorsData);
-
+  console.log(allAuthors);
   authorListWrapper.innerHTML = templates.authorList(allAuthorsData);
 }
 generateAuthors();
